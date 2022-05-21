@@ -1,0 +1,57 @@
+{% extends 'master_panel.html' %}
+{% load static %}
+{% block content %}
+    <div class="block" style="min-height: 855px">
+        <!-- Products Title -->
+        <div class="block-title">
+            <h2><i class="fa fa-shopping-cart"></i> <strong>Products</strong></h2>
+        </div>
+        <!-- END Products Title -->
+
+        <!-- Products Content -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-vcenter">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width: 100px;">#</th>
+                    <th>Product Name</th>
+                    <th class="text-center">Stock Code</th>
+                    <th class="text-center">QTY</th>
+                    <th class="text-right" style="width: 10%;">UNIT COST</th>
+                    <th class="text-right" style="width: 10%;">PRICE</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart_products %}
+                    <tr>
+                        <td class="text-center"><a href="#"><strong>{{ forloop.counter }}</strong></a></td>
+                        <td>{{ item.cart_product.product_name }}</td>
+                        <td class="text-center"><strong>{{ item.cart_product.stock_code }}</strong></td>
+                        <td class="text-center"><strong>{{ item.cart_amount }} {{ item.cart_product.stock_unit }}</strong></td>
+                        <td class="text-right"><strong>{{ item.cart_product.price }} {{ item.cart_product.currency }}</strong></td>
+                        <td class="text-right"><strong>$399,00</strong></td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="5" class="text-right text-uppercase"><strong>Total Product type Count:</strong></td>
+                    <td class="text-right"><strong>{{ cart_products | length }}</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right text-uppercase"><strong>Total Price:</strong></td>
+                    <td class="text-right"><strong>$975,00</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right text-uppercase"><strong>Total Count:</strong></td>
+                    <td class="text-right"><strong>$975,00</strong></td>
+                </tr>
+
+                <tr class="active">
+                    <td colspan="5" class="text-right text-uppercase"><strong>Total Due:</strong></td>
+                    <td class="text-right"><strong>$0,00</strong></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END Products Content -->
+    </div>
+{% endblock %}

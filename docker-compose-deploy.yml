@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  gcloud:
+    image: google/cloud-sdk:338.0.0
+    volumes:
+      - gcp-creds:/creds
+      - .:/core
+    working_dir: /core
+    environment:
+      - CLOUDSDK_CONFIG=/creds
+volumes:
+  gcp-creds:

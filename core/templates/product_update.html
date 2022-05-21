@@ -1,0 +1,97 @@
+{% extends 'master_panel.html' %}
+{% load crispy_forms_tags %}
+{% load global_functions %}
+{% load static %}
+{% block content %}
+    <script type="text/javascript">
+        window.onload = function () {
+            $(".bundle_div").hide();
+            $("#group_name").prop("required", false);
+            $("#group_code").prop("required", false);
+        }
+
+        function showBundle() {
+            if ($("#is_bundle").is(':checked')) {
+                $(".bundle_div").show(300);
+                $("#group_name").prop("required", true);
+                $("#group_code").prop("required", true);
+                $("#bundle_products").prop("required", true);
+            } else {
+                $(".bundle_div").hide(300);
+                $("#group_name").prop("required", false);
+                $("#group_code").prop("required", false);
+                $("#bundle_products").prop("required", false);
+            }
+
+        }
+
+
+    </script>
+
+    <div id="page-content">
+        <!-- Datatables Header -->
+        <div class="content-header">
+            <div class="header-section">
+                <h1>
+                    <i class="fa fa-table"></i>Edit Product<br><small>you can Edit this Product!</small>
+                </h1>
+            </div>
+            <div class="breadcrumb breadcrump-top">
+                <li>Product</li>
+                <li><a href="#">Edit</a></li>
+            </div>
+        </div>
+
+
+        <div class="block full">
+            <div class="block-title">
+                <h2><strong>Edit</strong> Product</h2>
+            </div>
+
+            <div>
+
+                <form action="#" enctype="multipart/form-data" method="POST"
+                      class="form-horizontal form_middle">
+
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form|crispy }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-0">
+                            {% if messages %}
+                                <br><br>
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><span
+                                                style="color: red">{{ message }}</span></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <input type="submit" class="btn btn-sm btn-primary">
+
+                            <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% check_bundle_product id %}
+
+                {% if is_bundle %}
+                    <a class="btn btn-success" href="{% url 'edit_product_group' id %}">Change Group Details </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+
+{% endblock %}
+
+
+

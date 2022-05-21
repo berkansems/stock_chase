@@ -1,0 +1,150 @@
+{% extends 'master_panel.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <script type="text/javascript">
+        window.onload = function () {
+            $(".bundle_div").hide();
+            $("#group_name").prop("required", false);
+            $("#group_code").prop("required", false);
+        }
+
+        function showBundle() {
+            if ($("#is_bundle").is(':checked')) {
+                $(".bundle_div").show(300);
+                $("#group_name").prop("required", true);
+                $("#group_code").prop("required", true);
+                $("#bundle_products").prop("required", true);
+            } else {
+                $(".bundle_div").hide(300);
+                $("#group_name").prop("required", false);
+                $("#group_code").prop("required", false);
+                $("#bundle_products").prop("required", false);
+            }
+
+        }
+
+
+    </script>
+
+    <div id="page-content">
+        <!-- Datatables Header -->
+        <div class="content-header">
+            <div class="header-section">
+                <h1>
+                    <i class="fa fa-table"></i>Add Product<br><small>you can add new Product!</small>
+                </h1>
+            </div>
+            <div class="breadcrumb breadcrump-top">
+                <li>Product</li>
+                <li><a href="#">Add</a></li>
+            </div>
+        </div>
+
+
+        <div class="block full">
+            <div class="block-title">
+                <h2><strong>Add</strong> Product</h2>
+            </div>
+
+            <div>
+
+                <form action="#" enctype="multipart/form-data" method="POST"
+                      class="form-horizontal form_middle">
+
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="channel" class="control-label">Sales Channel: *</label>
+                                <div id="channel">
+                                    <select class="form-control" name="sales_channel" required="">
+                                        <option value="">----</option>
+                                        <option value="trendyol">Trendyol</option>
+                                        <option value="hepsiburada">Hepsiburada</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Name: *</label>
+                                <input type="text" class="form-control" id="name" name="name" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="stock">Stock Amount: *</label>
+                                <input type="number" class="form-control" id="stock" name="stock" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="stock_code">Stock Code: *</label>
+                                <input type="text" class="form-control" id="stock_code" name="stock_code" required="">
+                            </div>
+                            <div class="form-group">
+
+                                <label class="checkbox-inline" onclick="showBundle()">
+                                    <input type="checkbox" name="is_bundle" id="is_bundle">Is Bundle Product?
+                                </label>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" checked name="status"> Is Active?
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 bundle_div">
+                            <div class="col-md-11">
+                                <div class="form-group">
+                                    <label for="group_name" style="margin-top: 6px">Group Name: *</label>
+                                    <input type="text" class="form-control" id="group_name" required name="group_name">
+                                </div>
+
+                            </div>
+                            <div class="col-md-11">
+                                <div class="form-group">
+                                    <label for="group_code" style="margin-top: 6px">Group Code: *</label>
+                                    <input type="text" class="form-control" id="group_code" required name="group_code">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="multiple-select">Select bundle products:
+                                    *</label>
+                                <div class="col-md-9">
+                                    <select id="multiple-select" name="bundle_products" id="bundle_products"
+                                            class="form-control" size="5" multiple>
+                                        {% for product in product_list %}
+                                            <option value="{{ product.id }}">{{ product.sales_channel }}
+                                                | {{ product.name }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-0">
+
+                            <input type="submit" class="btn btn-sm btn-primary">
+
+                            <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+
+{% endblock %}
+
+
+

@@ -1,0 +1,80 @@
+{% extends 'master_panel.html' %}
+{% load static %}
+{% block content %}
+    <div id="page-content">
+                        <!-- Courses Header -->
+                        <div class="content-header">
+                            <div class="header-section">
+                                <h1>
+                                    <i class="fa fa-shopping-cart"></i>Welcome to <strong>Hepsiburada</strong><br><small>Selling Page!</small>
+                                </h1>
+                            </div>
+                        </div>
+                        <ul class="breadcrumb breadcrumb-top">
+                            <li>Pages</li>
+                            <li>Hepsiburada</li>
+                            <li><a href="">Products</a></li>
+                        </ul>
+                        <!-- END Courses Header -->
+
+                        <!-- Main Row -->
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    {% for product in hb_products %}
+                                        <div class="col-sm-3">
+                                            <div class="widget">
+                                                <div class="widget-advanced">
+                                                    <!-- Widget Header -->
+                                                 <form action="/add-to-cart/" method="POST" target="process" enctype="multipart/form-data" >
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="product" value="{{ product.id }}">
+                                                    <div class="widget-header text-center themed-background-dark-amethyst" style="padding: 3px 3px; background-color: black !important;">
+                                                        {% if product.is_bundle %}
+                                                            <div class="widget-options-left">
+                                                                <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Advantageous!">
+                                                            <i class="fa fa-star" style="color: yellow"></i></button>
+                                                            </div>
+                                                        {% endif %}
+
+                                                        <h3 class="widget-content-light">
+                                                            <img src="{{ product.image.url }}" style="max-width: 100%"
+                                                             alt="image" >
+
+                                                        </h3>
+                                                    </div>
+                                                    <!-- END Widget Header -->
+
+                                                    <!-- Widget Main -->
+                                                    <div class="widget-main">
+
+                                                        {{ product.product_name }}
+                                                        <hr>
+                                                        <button type="submit" class="widget-image-container animation-fadeIn">
+                                                            <span class="widget-icon themed-background-amethyst"><i class="fa fa-shopping-cart"></i></span>
+                                                        </button>
+
+                                                        Price: <small>{{ product.price }} {{ product.currency }}</small>
+                                                        <div style="float: right">
+                                                            Order Amount: <input style="width: 40px" name="amount" > {{ product.stock_unit }}
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- END Widget Main -->
+                                                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+
+
+                                </div>
+                                <!-- END Courses Content -->
+                            </div>
+
+                        </div>
+                        <!-- END Main Row -->
+                    </div>
+{% endblock %}
