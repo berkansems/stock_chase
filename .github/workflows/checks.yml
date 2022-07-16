@@ -10,9 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: activate virtualenv
-          run: source venv/bin/activate
       - name: Test
-        run: python core/manage.py test
+        run:
+          python3.8 -m venv env
+          source env/bin/activate
+          python core/manage.py test
       - name: Lint
         run: docker-compose run --rm app sh -c "flake8"
