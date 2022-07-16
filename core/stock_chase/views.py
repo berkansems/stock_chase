@@ -9,6 +9,7 @@ from stock_chase.libs.helper import has_previous_stock_code, exceed_acceptable_s
 from stock_chase.models import ProdcutListing, ProductGroup
 from django.db.models import Min
 
+
 def home(request):
     '''home page method'''
     product_count = ProdcutListing.objects.count()
@@ -36,8 +37,6 @@ def add_product(request):
                 return redirect('add_product')
             max_accept = exceed_acceptable_stock(request, stock, bundle_products)
         amount = max_accept if max_accept is not None else stock
-
-
         new_product = create_new_product(sales_channel, name, amount, stock_code, is_bundle, status)
         bundle_products.append(new_product.id)
 
@@ -199,6 +198,7 @@ def increase_stock(request, pk):
 
     return redirect('list_products')
 
+
 def calculate_bundle_stocks(product, new_amount):
     '''reduce bundle product stock amount'''
     if product.is_bundle is False:
@@ -234,7 +234,8 @@ def reduce_stock(request, pk):
             product.stock = product.stock - amount
             product.save()
         else:
-            candidate_reduce_stock_products = ProdcutListing.objects.filter(stock_code= product.stock_code, is_bundle=False)
+            candidate_reduce_stock_products = ProdcutListing.objects.filter(
+                stock_code=product.stock_code, is_bundle=False)
             for product in candidate_reduce_stock_products:
                 product.stock -= amount
                 product.save()

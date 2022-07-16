@@ -17,7 +17,7 @@ def create_bundle_group(bundle_products, group_name, group_code):
                 bundle_product=item
             )
     except Exception as err:
-        pass
+        print(err)
 
 
 def create_new_product(sales_channel, name, stock, stock_code, is_bundle, status):
@@ -32,7 +32,7 @@ def create_new_product(sales_channel, name, stock, stock_code, is_bundle, status
         )
         return new_product
     except Exception as err:
-        pass
+        print(err)
 
 
 def has_previous_stock_code(request, stock_code, group_code=None):
@@ -44,8 +44,8 @@ def has_previous_stock_code(request, stock_code, group_code=None):
                            'Stock code or group code previously defined to another product, please define again!')
             return True
 
-    except:
-        pass
+    except Exception as err:
+        print(err)
     return False
 
 
@@ -54,8 +54,6 @@ def exceed_acceptable_stock(request, stock, bundle_products):
     max_value = max_available_stock['stock__min']
     if int(stock) >= max_value:
         return max_value
-
-
 
 
 def exceed_maximum_stock(request, stock, product_id):

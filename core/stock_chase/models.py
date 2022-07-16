@@ -32,7 +32,7 @@ class ProdcutListing(models.Model):
     @property
     def statusChange(self):
         '''to change status of objects'''
-        if self.status == True:
+        if self.status is True:
             status = False
         else:
             status = True
